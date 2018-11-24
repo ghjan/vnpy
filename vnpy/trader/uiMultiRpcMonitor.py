@@ -134,7 +134,7 @@ class StrategyMonitorWidget(QtWidgets.QGroupBox):
             print('call removeStrategy({})'.format(self.name))
             self.mainEngine.removeStrategy(self.name)
         else:
-            print('cant not call removeStrategy',file=sys.stderr)
+            print('cant not call removeStrategy',sys.stderr)
 
 
 class CtaEngineMonitorWidget(QtWidgets.QWidget):
@@ -227,22 +227,22 @@ class CtaEngineMonitorWidget(QtWidgets.QWidget):
         try:
             cta_setting = json.loads(value)
         except Exception as ex:
-            print(u'{}{}'.format(str(ex),traceback.format_exc()),file=sys.stderr)
+            print(u'{}{}'.format(str(ex),traceback.format_exc()),sys.stderr)
             return
 
         if not isinstance(cta_setting, dict):
-            print(u'输入得不是dict结构',file=sys.stderr)
+            print(u'输入得不是dict结构',sys.stderr)
             return
 
         if cta_setting.get('name',None) == None or cta_setting.get('className',None) == None:
-            print(u'输入设置里面缺少name/className', file=sys.stderr)
+            print(u'输入设置里面缺少name/className', sys.stderr)
             return
 
         if self.mainEngine and hasattr(self.mainEngine, 'addStrategy'):
             print('call addStrategy({})'.format(cta_setting))
             self.mainEngine.addStrategy(cta_setting)
         else:
-            print('cant not call addStrategy:{}'.format(cta_setting), file=sys.stderr)
+            print('cant not call addStrategy:{}'.format(cta_setting), sys.stderr)
 
     def updateStatus(self, status_dict):
         """更新状态数据"""

@@ -426,7 +426,7 @@ class TradeApi(object):
     #----------------------------------------------------------------------
     def onError(self, msg, reqid):
         """错误回调"""
-        print('onError:{},{}'.format(msg, reqid),file=sys.stderr)
+        print('onError:{},{}'.format(msg, reqid),sys.stderr)
         
     #----------------------------------------------------------------------
     def onGetSymbols(self, data, reqid):

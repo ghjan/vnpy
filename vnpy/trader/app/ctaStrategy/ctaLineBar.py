@@ -3075,13 +3075,13 @@ class CtaLineBar(object):
         :return:
         """
         if not isinstance(dict_data, dict):
-            print(u'{}.append_data，输入数据不是dict'.format(self.name), file=sys.stderr)
+            print(u'{}.append_data，输入数据不是dict'.format(self.name), sys.stderr)
             return
 
         dict_fieldnames = list(dict_data.keys()) if field_names is None else field_names
 
         if not isinstance(dict_fieldnames, list):
-            print(u'{}append_data，输入字段不是list'.format(self.name),file=sys.stderr)
+            print(u'{}append_data，输入字段不是list'.format(self.name),sys.stderr)
             return
         try:
             if not os.path.exists(file_name):

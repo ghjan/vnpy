@@ -75,7 +75,7 @@ class Fcoin_TradeApi(object):
                 data = self.signed_request( 'POST' , url , kwargs )
             return data
         except Exception as ex:
-            print(u'{} Error in processRequest:{}{}'.format(datetime.now(), str(ex),traceback.format_exc()), file=sys.stderr)
+            print(u'{} Error in processRequest:{}{}'.format(datetime.now(), str(ex),traceback.format_exc()), sys.stderr)
             # pass
         return None
 
@@ -99,7 +99,7 @@ class Fcoin_TradeApi(object):
                     callback(data, req, reqID)
                     # print "22"
             except Exception as ex:
-                print('{} processQueue Exception:{} {}'.format(datetime.now(), str(ex),traceback.format_exc()), file=sys.stderr)
+                print('{} processQueue Exception:{} {}'.format(datetime.now(), str(ex),traceback.format_exc()), sys.stderr)
             self.reqQueue.pop(0)
             sleep(0.1)
 
@@ -110,7 +110,7 @@ class Fcoin_TradeApi(object):
             if req1["url"] == req2["url"]:
                 return True
         except Exception as ex:
-            print(u'Error in is_same_req , req1:{} , req2:{},exception:{}'.format(req1 , req2,str(ex)),file=sys.stderr)
+            print(u'Error in is_same_req , req1:{} , req2:{},exception:{}'.format(req1 , req2,str(ex)),sys.stderr)
         return flag
 
     #各种请求,获取数据方式
@@ -180,7 +180,7 @@ class Fcoin_TradeApi(object):
             r = requests.request(method, full_url, headers = headers, json=kwargs)
             r.raise_for_status()
         except Exception as ex:
-            print(u'signed_request exception:{},{}'.format(str(ex), traceback.format_exc()), file=sys.stderr)
+            print(u'signed_request exception:{},{}'.format(str(ex), traceback.format_exc()), sys.stderr)
             failed_state_json = {"status":"fail","msg": str(ex) }
             if r == None:
                 print("signed_request r is None")
@@ -237,7 +237,7 @@ class Fcoin_TradeApi(object):
             else:
                 self.reqQueue.append((method, req))
         except Exception as ex:
-            print(u'sendRequest exception:{},{}'.format(str(ex), traceback.format_exc()), file=sys.stderr)
+            print(u'sendRequest exception:{},{}'.format(str(ex), traceback.format_exc()), sys.stderr)
         
         # 返回请求编号
         return self.reqID
@@ -419,7 +419,7 @@ class Fcoin_DataApi(object):
                 try:
                     callback(self.http_get_request(url, resource , params ))
                 except Exception as ex:
-                    print(u'run exception:{},{}'.format(str(ex),traceback.format_exc()),file=sys.stderr)
+                    print(u'run exception:{},{}'.format(str(ex),traceback.format_exc()),sys.stderr)
             sleep(self.taskInterval)
 
     #----------------------------------------------------------------------
@@ -438,7 +438,7 @@ class Fcoin_DataApi(object):
             r = requests.get(r_url, postdata )
             r.raise_for_status()
         except Exception as ex:
-            print(u'http_get_request exception:{}'.format(str(ex),traceback.format_exc()),file=sys.stderr)
+            print(u'http_get_request exception:{}'.format(str(ex),traceback.format_exc()),sys.stderr)
             return {"status":"fail","msg":str(ex)}
         if r.status_code == 200:
             return r.json()

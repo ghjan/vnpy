@@ -42,7 +42,7 @@ class DataSource:
         try:
             rsp_data = requests.get(self.bar_url, params=values)
         except Exception as e:
-            print( str(e),file=sys.stderr)
+            print( str(e),sys.stderr)
 
         json_data = json.loads(rsp_data.content.decode("utf-8"))
 

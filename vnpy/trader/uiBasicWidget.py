@@ -365,7 +365,7 @@ class BasicMonitor(QtWidgets.QTableWidget):
             if self.sorting:
                 self.setSortingEnabled(True)
         except Exception as ex:
-            print('update data exception:{},{}'.format(str(ex),traceback.format_exc()),file=sys.stderr)
+            print('update data exception:{},{}'.format(str(ex),traceback.format_exc()),sys.stderr)
 
     #----------------------------------------------------------------------
     def resizeColumns(self):

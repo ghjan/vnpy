@@ -117,7 +117,7 @@ class coinbeneRestApi(object):
     # ----------------------------------------------------------------------
     def onError(self, code, error):
         """错误回调"""
-        print(u'on error {} {}'.format(code, error),file=sys.stderr)
+        print(u'on error {} {}'.format(code, error),sys.stderr)
 
     # ----------------------------------------------------------------------
     def onData(self, data, reqid):

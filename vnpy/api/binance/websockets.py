@@ -422,7 +422,7 @@ class BinanceSocketManager(threading.Thread):
                 self._start_user_timer()
         except Exception as ex:
             print(datetime.now().strftime("%Y-%m-%d %H:%M:%S")  + " in _keepalive_user_socket")
-            print(str(ex),file=sys.stderr)
+            print(str(ex),sys.stderr)
 
     def stop_socket(self, conn_key):
         """Stop a websocket given the connection key

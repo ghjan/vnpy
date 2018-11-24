@@ -63,7 +63,7 @@ def _check_gpid(gpid):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
         returncode = p.wait()
     except OSError as e:
-        print('找不到shell运行命令ps', file=sys.stderr)
+        print('找不到shell运行命令ps', sys.stderr)
         exit(1)
 
     #print('returncode1:{}'.format(returncode))
@@ -72,7 +72,7 @@ def _check_gpid(gpid):
                 stderr=subprocess.PIPE, shell=False)
         returncode = p2.wait()
     except OSError as e:
-        print(u'找不到shell运行命令uniq', file=sys.stderr)
+        print(u'找不到shell运行命令uniq', sys.stderr)
         exit(1)
 
    # print('returncode2:{}'.format(returncode))
@@ -181,7 +181,7 @@ def _start():
                 sendmail.sendmail(subject='Notification: {0}目录下服务 killed by service.py'.format(base_path),
                                   msgcontent='停止运行时间,已将进程组[gpid={}]杀死.'.format(gpid))
             except:
-                print(u'发送通知邮件失败', file=sys.stderr)
+                print(u'发送通知邮件失败', sys.stderr)
                 pass
         else:
             print(u'现在属于停止运行时间，不启动服务')
@@ -207,7 +207,7 @@ def _start():
                             subject='Notification: {0}目录下进程启动'.format(base_path),
                             msgcontent='{}属于运行时间,已启动服务[gpid={}]'.format(datetime.now(), gpid))
                     except:
-                        print(u'发送通知邮件失败', file=sys.stderr)
+                        print(u'发送通知邮件失败', sys.stderr)
                         pass
                     break
 
@@ -251,7 +251,7 @@ def operate_crontab(operate):
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
         returncode = p.wait()
     except OSError as e:
-        print(u"找不到shell运行命令crontab", file=sys.stderr)
+        print(u"找不到shell运行命令crontab", sys.stderr)
         exit(1)
 
     remain_cron_list = []
@@ -270,14 +270,14 @@ def operate_crontab(operate):
             for i in remain_cron_list:
                 f.write(i.encode("utf-8"))
         os.popen("crontab {}".format(tmp_cron_file))
-        print(u'添加crontab项: {}'.format(cron_content), file=sys.stderr)
+        print(u'添加crontab项: {}'.format(cron_content), sys.stderr)
 
     if operate == "del" and exist_flag:
         with open(tmp_cron_file, 'wb') as f:
             for i in remain_cron_list:
                 f.write(i.encode("utf-8"))
         os.popen("crontab {}".format(tmp_cron_file))
-        print(u'删除crontab item: {}'.format(old_cron_content), file=sys.stderr)
+        print(u'删除crontab item: {}'.format(old_cron_content), sys.stderr)
 
         # os.remove(tmp_cron_file)
 

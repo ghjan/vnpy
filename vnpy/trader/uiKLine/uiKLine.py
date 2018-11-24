@@ -1140,7 +1140,7 @@ class KLineWidget(KeyWraper):
         :return:
         """
         if df_trade_list is None or len(df_trade_list) ==0:
-            print(u'dataframe is None or Empty',file=sys.stderr)
+            print(u'dataframe is None or Empty',sys.stderr)
             return
 
         for idx in df_trade_list.index:
@@ -1179,7 +1179,7 @@ class KLineWidget(KeyWraper):
         :return:
         """
         if len(self.datas)==0:
-            print(u'No datas exist',file=sys.stderr)
+            print(u'No datas exist',sys.stderr)
             return
         tns = copy.copy(tns_dict)
 
@@ -1211,7 +1211,7 @@ class KLineWidget(KeyWraper):
         :return:
         """
         if df_trans is None or len(df_trans) == 0:
-            print(u'dataframe is None or Empty', file=sys.stderr)
+            print(u'dataframe is None or Empty', sys.stderr)
             return
 
         for idx in df_trans.index:
@@ -1292,7 +1292,7 @@ class KLineWidget(KeyWraper):
         :return:
         """
         if df_markup is None or len(df_markup) == 0:
-            print(u'df_markup is None or Empty', file=sys.stderr)
+            print(u'df_markup is None or Empty', sys.stderr)
             return
 
         for idx in df_markup.index:

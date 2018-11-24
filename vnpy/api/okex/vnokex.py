@@ -92,7 +92,7 @@ class OkexApi(object):
             self.thread.start()
         except Exception as ex:
             print(u'{} OkexApi reconnect exception :{},{}'.format(datetime.now(), str(ex), traceback.format_exc()),
-                  file=sys.stderr)
+                  sys.stderr)
     
     #----------------------------------------------------------------------
     def connect(self, apiKey, secretKey, trace=False):
@@ -123,7 +123,7 @@ class OkexApi(object):
             self.thread.start()
         except Exception as ex:
             print(u'{} OkexApi connect exception :{},{}'.format(datetime.now(), str(ex), traceback.format_exc()),
-                  file=sys.stderr)
+                  sys.stderr)
     #----------------------------------------------------------------------
     def readData(self, evt):
         """
@@ -240,7 +240,7 @@ class OkexApi(object):
         try:
             self.ws.send(j)
         except websocket.WebSocketConnectionClosedException as ex:
-            print(u'vnokex.sendTradingRequest Exception:{}'.format(str(ex)),file=sys.stderr)
+            print(u'vnokex.sendTradingRequest Exception:{}'.format(str(ex)),sys.stderr)
 
     #----------------------------------------------------------------------
     def sendDataRequest(self, channel):
@@ -255,9 +255,9 @@ class OkexApi(object):
         try:
             self.ws.send(j)
         except websocket.WebSocketConnectionClosedException as ex:
-            print(u'vnokex.sendDataRequest Exception:{},{}'.format(str(ex),traceback.format_exc()), file=sys.stderr)
+            print(u'vnokex.sendDataRequest Exception:{},{}'.format(str(ex),traceback.format_exc()), sys.stderr)
         except Exception as ex:
-            print(u'vnokex.sendDataRequest Exception:{},{}'.format(str(ex),traceback.format_exc()), file=sys.stderr)
+            print(u'vnokex.sendDataRequest Exception:{},{}'.format(str(ex),traceback.format_exc()), sys.stderr)
 
     def sendHeartBeat(self):
         """
@@ -271,7 +271,7 @@ class OkexApi(object):
             j = json.dumps(d)
             self.ws.send(j)
         except websocket.WebSocketConnectionClosedException as ex:
-            print(u'vnokex.sendHeartBeat Exception:{}'.format(str(ex)), file=sys.stderr)
+            print(u'vnokex.sendHeartBeat Exception:{}'.format(str(ex)), sys.stderr)
 
     #----------------------------------------------------------------------
     def login(self):
@@ -297,7 +297,7 @@ class OkexApi(object):
             self.ws.send(j)
             return True
         except websocket.WebSocketConnectionClosedException as ex:
-            print(u'vnokex.login exception:{},{}'.format(str(ex), traceback.format_exc()), file=sys.stderr)
+            print(u'vnokex.login exception:{},{}'.format(str(ex), traceback.format_exc()), sys.stderr)
             return False
 
 
@@ -468,7 +468,7 @@ class WsFuturesApi(object):
             self.thread = Thread(target=self.ws.run_forever, kwargs=kwargs)
             self.thread.start()
         except Exception as ex:
-            print(u'{} wsFuturesApi connect exception :{},{}'.format(datetime.now(), str(ex),traceback.format_exc()), file=sys.stderr)
+            print(u'{} wsFuturesApi connect exception :{},{}'.format(datetime.now(), str(ex),traceback.format_exc()), sys.stderr)
 
     # ----------------------------------------------------------------------
     def http_get_request(self, url, params, add_to_headers=None, TIMEOUT=5):
@@ -487,7 +487,7 @@ class WsFuturesApi(object):
             else:
                 return {"status": "fail"}
         except Exception as e:
-            print(u'httpGet failed :{},trace:{}'.format(str(e),traceback.format_exc()), file=sys.stderr)
+            print(u'httpGet failed :{},trace:{}'.format(str(e),traceback.format_exc()), sys.stderr)
             return {"status": "fail", "msg": e}
 
     # ----------------------------------------------------------------------
@@ -502,7 +502,7 @@ class WsFuturesApi(object):
                 return contract_name
 
         except Exception as ex:
-            print(u'OkexContractApi.getContractName exception:{},{}'.format(str(ex),traceback.format_exc()), file=sys.stderr)
+            print(u'OkexContractApi.getContractName exception:{},{}'.format(str(ex),traceback.format_exc()), sys.stderr)
             return None
 
     def sendHeartBeat(self):
@@ -517,7 +517,7 @@ class WsFuturesApi(object):
             j = json.dumps(d)
             self.ws.send(j)
         except websocket.WebSocketConnectionClosedException as ex:
-            print(u'vnokex.futuresApi.sendHeartBeat Exception:{}'.format(str(ex)), file=sys.stderr)
+            print(u'vnokex.futuresApi.sendHeartBeat Exception:{}'.format(str(ex)), sys.stderr)
 
     # ----------------------------------------------------------------------
     def close(self):
@@ -634,9 +634,9 @@ class WsFuturesApi(object):
         try:
             self.ws.send(j)
         except websocket.WebSocketConnectionClosedException as ex:
-            print(u'OkexContractApi.sendTradingRequest exception:{},{}'.format(str(ex),traceback.format_exc()), file=sys.stderr)
+            print(u'OkexContractApi.sendTradingRequest exception:{},{}'.format(str(ex),traceback.format_exc()), sys.stderr)
         except Exception as ex:
-            print(u'OkexContractApi.sendTradingRequest exception:{},{}'.format(str(ex), traceback.format_exc()), file=sys.stderr)
+            print(u'OkexContractApi.sendTradingRequest exception:{},{}'.format(str(ex), traceback.format_exc()), sys.stderr)
 
     # ----------------------------------------------------------------------
 
@@ -661,9 +661,9 @@ class WsFuturesApi(object):
         try:
             self.ws.send(j)
         except websocket.WebSocketConnectionClosedException as ex:
-            print(u'OkexContractApi.login exception:{},{}'.format(str(ex), traceback.format_exc()), file=sys.stderr)
+            print(u'OkexContractApi.login exception:{},{}'.format(str(ex), traceback.format_exc()), sys.stderr)
         except Exception as ex:
-            print(u'OkexContractApi.login exception:{},{}'.format(str(ex), traceback.format_exc()), file=sys.stderr)
+            print(u'OkexContractApi.login exception:{},{}'.format(str(ex), traceback.format_exc()), sys.stderr)
 
     # ----------------------------------------------------------------------
 

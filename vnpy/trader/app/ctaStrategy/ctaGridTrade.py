@@ -132,7 +132,7 @@ class CtaGrid(object):
             self.openPrices =  j.get('openPrices',{})
             self.snapshot = j.get('snapshot',{})
         except Exception as ex:
-            print('CtaGrid fromJson Exception:{} {}'.format(str(ex),traceback.format_exc()),file=sys.stderr)
+            print('CtaGrid fromJson Exception:{} {}'.format(str(ex),traceback.format_exc()),sys.stderr)
 
     def toStr(self):
         """输入字符串"""
@@ -2613,7 +2613,7 @@ class ArbitrageGrid(object):
             if self.leg2 is not None:
                 j['leg2'] = self.leg2.toJson()
         except Exception as ex:
-            print(u'Arbitrage Grid toJson exception:{} {}'.format(str(ex), traceback.format_exc()),file=sys.stderr)
+            print(u'Arbitrage Grid toJson exception:{} {}'.format(str(ex), traceback.format_exc()),sys.stderr)
 
         return j
 
@@ -2684,7 +2684,7 @@ class ArbitrageTrade(object):
         if self.strategy and hasattr(self.strategy, 'writeCtaError'):
             self.strategy.writeCtaError(log)
         else:
-            print(log,file=sys.stderr)
+            print(log,sys.stderr)
 
     def toJson(self):
         """

@@ -102,7 +102,7 @@ class VtGateway(object):
         # 写入本地log日志
         if self.logger:
             self.logger.error(logMsg)
-            print(logMsg,file=sys.stderr)
+            print(logMsg,sys.stderr)
         else:
             self.createLogger()
 
@@ -207,7 +207,7 @@ class VtGateway(object):
         self.onError(error)
 
         # 输出到错误管道
-        print(u'{}:{} {}'.format(datetime.now(),self.gatewayName,content),file=sys.stderr)
+        print(u'{}:{} {}'.format(datetime.now(),self.gatewayName,content),sys.stderr)
 
         if self.logger:
             self.logger.error(content)

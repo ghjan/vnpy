@@ -70,7 +70,7 @@ class Gate_TradeApi(object):
                     data["systemID"] = kwargs["orderNumber"]
             return data
         except Exception as ex:
-            print(u'processRequest Exception:{},{}'.format(str(ex),traceback.format_exc()),file=sys.stderr)
+            print(u'processRequest Exception:{},{}'.format(str(ex),traceback.format_exc()),sys.stderr)
 
         return None
 
@@ -92,11 +92,11 @@ class Gate_TradeApi(object):
                     if data != None :
                         callback(data, req, reqID)
                 except Exception as ex:
-                    print(u'processQueue1 Exception:{},{}'.format(str(ex), traceback.format_exc()), file=sys.stderr)
+                    print(u'processQueue1 Exception:{},{}'.format(str(ex), traceback.format_exc()), sys.stderr)
                 self.reqQueue.pop(0)
                 sleep(0.1)
             except Exception as ex:
-                print(u'processQueue2 Exception:{},{}'.format(str(ex), traceback.format_exc()), file=sys.stderr)
+                print(u'processQueue2 Exception:{},{}'.format(str(ex), traceback.format_exc()), sys.stderr)
 
     #----------------------------------------------------------------------
     def is_same_req(self, req1 , req2):
@@ -352,7 +352,7 @@ class Gate_DataApi(object):
                         data["currencyPair"] = params
                         callback( data )
                 except Exception as ex:
-                    print(u'run exception:{},{}'.format(str(ex),traceback.format_exc()),file=sys.stderr)
+                    print(u'run exception:{},{}'.format(str(ex),traceback.format_exc()),sys.stderr)
             sleep(self.taskInterval)
 
     # ----------------------------------------------------------------------

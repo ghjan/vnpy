@@ -55,7 +55,7 @@ class BinanceData(object):
         if self.strategy and hasattr(self.strategy,'writeCtaError'):
             self.strategy.writeCtaError(content)
         else:
-            print(content,file=sys.stderr)
+            print(content,sys.stderr)
             
     def get_bars(self, symbol, period, callback, bar_is_completed=False,bar_freq=1, start_dt=None):
         """

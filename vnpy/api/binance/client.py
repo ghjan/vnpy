@@ -116,11 +116,11 @@ class Client(object):
     def writeError(self, content, error_id=0):
         content = 'client ' + content
         if not self.api:
-            print(u'{},error_id:{}'.format(content, error_id) ,file=sys.stderr)
+            print(u'{},error_id:{}'.format(content, error_id) ,sys.stderr)
             return
 
         if not hasattr(self.api, 'writeError'):
-            print(u'{},error_id:{}'.format(content, error_id), file=sys.stderr)
+            print(u'{},error_id:{}'.format(content, error_id), sys.stderr)
             return
 
         self.api.writeError(content, error_id)

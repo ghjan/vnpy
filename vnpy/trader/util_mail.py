@@ -8,6 +8,7 @@ from email.mime.multipart import MIMEMultipart
 import smtplib
 from threading import Lock,Thread
 import time
+import random
 
 # 创建一个带附件的实例
 

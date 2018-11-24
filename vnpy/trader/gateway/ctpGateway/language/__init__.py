@@ -8,5 +8,5 @@ from vnpy.trader.gateway.ctpGateway.language.chinese import text
 
 # 是否要使用英文
 from vnpy.trader.vtGlobal import globalSetting
-if globalSetting['language'] == 'english':
+if globalSetting.get('language') == 'english':
     from vnpy.trader.gateway.ctpGateway.language.english import text

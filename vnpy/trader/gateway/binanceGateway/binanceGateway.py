@@ -185,7 +185,7 @@ class BinanceGateway(VtGateway):
         if self.logger:
             self.logger.error(content)
 
-        print(u'{} error:{}'.format(self.gatewayName, content), file=sys.stderr)
+        print(u'{} error:{}'.format(self.gatewayName, content), sys.stderr)
 '''
 币安接口
 '''

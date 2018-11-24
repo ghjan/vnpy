@@ -156,7 +156,7 @@ try:
     from openpyxl.utils.dataframe import dataframe_to_rows
     from openpyxl.drawing.image import Image
 except:
-    print(u'can not import openpyxl',file=sys.stderr)
+    print(u'can not import openpyxl',sys.stderr)
 
 def save_df_to_excel(file_name, sheet_name, df):
     """
@@ -170,7 +170,7 @@ def save_df_to_excel(file_name, sheet_name, df):
         return False
 
     if 'openpyxl' not in sys.modules:
-        print(u'can not import openpyxl', file=sys.stderr)
+        print(u'can not import openpyxl', sys.stderr)
         return False
 
     try:
@@ -203,7 +203,7 @@ def save_df_to_excel(file_name, sheet_name, df):
         wb.close()
     except Exception as ex:
         import traceback
-        print(u'save_df_to_excel exception:{}'.format(str(ex)), traceback.format_exc(),file=sys.stderr)
+        print(u'save_df_to_excel exception:{}'.format(str(ex)), traceback.format_exc(),sys.stderr)
 
 def save_text_to_excel(file_name, sheet_name, text):
     """
@@ -249,7 +249,7 @@ def save_text_to_excel(file_name, sheet_name, text):
         return True
     except Exception as ex:
         import traceback
-        print(u'save_text_to_excel exception:{}'.format(str(ex)), traceback.format_exc(),file=sys.stderr)
+        print(u'save_text_to_excel exception:{}'.format(str(ex)), traceback.format_exc(),sys.stderr)
         return False
 
 
@@ -302,7 +302,7 @@ def save_images_to_excel(file_name, sheet_name, image_names):
                 # 添加至对应的WorkSheet中
                 ws.add_image(img1, cell_id)
             except:
-                print('exception loading image {0}'.format(image_name), file=sys.stderr)
+                print('exception loading image {0}'.format(image_name), sys.stderr)
                 return False
 
         # Save the workbook
@@ -311,5 +311,5 @@ def save_images_to_excel(file_name, sheet_name, image_names):
         return True
     except Exception as ex:
         import traceback
-        print(u'save_images_to_excel exception:{}'.format(str(ex)), traceback.format_exc(),file=sys.stderr)
+        print(u'save_images_to_excel exception:{}'.format(str(ex)), traceback.format_exc(),sys.stderr)
         return False

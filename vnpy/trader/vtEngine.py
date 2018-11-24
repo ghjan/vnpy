@@ -1,10 +1,13 @@
 # encoding: UTF-8
+from vnpy.trader.language.chinese.constant import DIRECTION_LONG, DIRECTION_SHORT, STATUS_ALLTRADED, STATUS_REJECTED, \
+    STATUS_CANCELLED
 
 print(u'启动load vtEngine.py')
 
 import shelve
 from collections import OrderedDict
-import os,sys
+import os
+import sys
 import copy
 
 from pymongo import MongoClient, ASCENDING
@@ -26,11 +29,12 @@ import psutil
 try:
     from .util_mail import *
 except:
-    print('import util_mail fail',file=sys.stderr)
+    print('import util_mail fail', sys.stderr)
+
 try:
     from .util_wechat import *
 except:
-    print('import util_wechat fail',file=sys.stderr)
+    print('import util_wechat fail',sys.stderr)
 
 LOG_DB_NAME = 'vt_logger'
 
@@ -47,10 +51,10 @@ class MainEngine(object):
         # 创建事件引擎
         self.eventEngine = eventEngine
         self.eventEngine.start()
-        
+
         # 创建数据引擎
         self.dataEngine = DataEngine(self, self.eventEngine)
-        
+
         # MongoDB数据库相关
         self.dbClient = None    # MongoDB客户端对象
         self.db_has_connected = False
@@ -212,7 +216,7 @@ class MainEngine(object):
             gateway.subscribe(subscribeReq)
         else:
             self.writeLog(text.GATEWAY_NOT_EXIST.format(gateway=gatewayName))
-        
+
     # ----------------------------------------------------------------------
     def sendOrder(self, orderReq, gatewayName):
         """对特定接口发单"""
@@ -234,7 +238,7 @@ class MainEngine(object):
             return gateway.sendOrder(orderReq)
         else:
             self.writeLog(text.GATEWAY_NOT_EXIST.format(gateway=gatewayName))
-    
+
     # ----------------------------------------------------------------------
     def cancelOrder(self, cancelOrderReq, gatewayName):
         """对特定接口撤单"""
@@ -270,8 +274,8 @@ class MainEngine(object):
     def qryAccountNo(self,gatewayName):
         """
          根据gateway名称，返回账号
-        :param gatewayName: 
-        :return: 
+        :param gatewayName:
+        :return:
         """
         if gatewayName in self.gatewayDict:
             gateway = self.gatewayDict[gatewayName]
@@ -287,17 +291,17 @@ class MainEngine(object):
             gateway.qryPosition()
         else:
             self.writeLog(text.GATEWAY_NOT_EXIST.format(gateway=gatewayName))
-        
+
     # ----------------------------------------------------------------------
     def exit(self):
-        """退出程序前调用，保证正常退出"""        
+        """退出程序前调用，保证正常退出"""
         # 安全关闭所有接口
         for gateway in list(self.gatewayDict.values()):
             gateway.close()
-        
+
         # 停止事件引擎
-        self.eventEngine.stop()      
-        
+        self.eventEngine.stop()
+
         # 停止数据记录引擎
         if self.drEngine:
             self.drEngine.stop()
@@ -349,7 +353,7 @@ class MainEngine(object):
     def createLogger(self):
         """
         创建日志记录
-        :return: 
+        :return:
         """
         currentFolder = os.path.abspath(os.path.join(os.getcwd(), 'logs'))
         if os.path.isdir(currentFolder):
@@ -376,10 +380,10 @@ class MainEngine(object):
         # 写入本地log日志
         if self.logger is not None:
             self.logger.error(content)
-            print('{}'.format(datetime.now()),file=sys.stderr)
-            print(content, file=sys.stderr)
+            print('{}'.format(datetime.now()),sys.stderr)
+            print(content, sys.stderr)
         else:
-            print(content, file=sys.stderr)
+            print(content, sys.stderr)
             self.createLogger()
 
         # 发出邮件/微信
@@ -390,7 +394,7 @@ class MainEngine(object):
        #        target = WECHAT_GROUP["DEBUG_01"]
        #    sendWeChatMsg(content, target=target, level=WECHAT_LEVEL_ERROR)
        #except Exception as ex:
-       #    print(u'send wechat exception:{}'.format(str(ex)),file=sys.stderr)
+       #    print(u'send wechat exception:{}'.format(str(ex)),sys.stderr)
 
     # ----------------------------------------------------------------------
     def writeWarning(self, content):
@@ -405,7 +409,7 @@ class MainEngine(object):
         if self.logger is not None:
             self.logger.warning(content)
         else:
-            print(content,file=sys.stderr)
+            print(content,sys.stderr)
             self.createLogger()
 
         # 发出邮件
@@ -422,7 +426,7 @@ class MainEngine(object):
         #        target = WECHAT_GROUP["DEBUG_01"]
         #    sendWeChatMsg(content, target=target, level=WECHAT_LEVEL_WARNING)
         #except Exception as ex:
-        #    print(u'send wechat exception:{}'.format(str(ex)), file=sys.stderr)
+        #    print(u'send wechat exception:{}'.format(str(ex)), sys.stderr)
 
     # ----------------------------------------------------------------------
     def writeNotification(self, content):
@@ -447,7 +451,7 @@ class MainEngine(object):
        #         target = WECHAT_GROUP["DEBUG_01"]
        #     sendWeChatMsg(content, target=target, level=WECHAT_LEVEL_INFO)
        # except Exception as ex:
-       #     print(u'send wechat exception:{}'.format(str(ex)), file=sys.stderr)
+       #     print(u'send wechat exception:{}'.format(str(ex)), sys.stderr)
 
     # ----------------------------------------------------------------------
     def writeCritical(self, content):
@@ -462,10 +466,10 @@ class MainEngine(object):
         # 写入本地log日志
         if self.logger:
             self.logger.critical(content)
-            print('{}'.format(datetime.now()), file=sys.stderr)
-            print(content, file=sys.stderr)
+            print('{}'.format(datetime.now()), sys.stderr)
+            print(content, sys.stderr)
         else:
-            print(content, file=sys.stderr)
+            print(content, sys.stderr)
             self.createLogger()
 
         # 发出邮件
@@ -490,11 +494,11 @@ class MainEngine(object):
         if not self.dbClient:
             # 读取MongoDB的设置
             host, port, logging = loadMongoSetting()
-                
+
             try:
                 # 设置MongoDB操作的超时时间为0.5秒
                 self.dbClient = MongoClient(host, port, connectTimeoutMS=500)
-                
+
                 # 调用server_info查询服务器状态，防止服务器异常并未连接成功
                 self.dbClient.server_info()
 
@@ -510,7 +514,7 @@ class MainEngine(object):
                 self.writeError(text.DATABASE_CONNECTING_FAILED)
                 self.db_has_connected = False
 
-    
+
     # ----------------------------------------------------------------------
     def dbInsert(self, dbName, collectionName, d):
         """向MongoDB中插入数据，d是具体数据"""
@@ -709,7 +713,7 @@ class MainEngine(object):
             'gateway': log.gatewayName
         }
         self.dbInsert(LOG_DB_NAME, self.todayDate, d)
-    
+
     #----------------------------------------------------------------------
     def getContract(self, vtSymbol):
         """查询合约"""
@@ -719,12 +723,12 @@ class MainEngine(object):
     def getAllContracts(self):
         """查询所有合约（返回列表）"""
         return self.dataEngine.getAllContracts()
-    
+
     #----------------------------------------------------------------------
     def getOrder(self, vtOrderID):
         """查询委托"""
         return self.dataEngine.getOrder(vtOrderID)
-    
+
     #----------------------------------------------------------------------
     def getAllWorkingOrders(self):
         """查询所有的活跃的委托（返回列表）"""
@@ -795,32 +799,32 @@ class DataEngine(object):
         """Constructor"""
         self.mainEngine = mainEngine
         self.eventEngine = eventEngine
-        
+
         # 保存合约详细信息的字典
         self.contractDict = {}
-        
+
         # 保存委托数据的字典
         self.orderDict = {}
-        
+
         # 保存活动委托数据的字典（即可撤销）
         self.workingOrderDict = {}
-        
+
         # 读取保存在硬盘的合约数据
         self.loadContracts()
-        
+
         # 注册事件监听
         self.registerEvent()
 
         # 已订阅合约代码
         self.subscribedSymbols = set()
-        
+
     # ----------------------------------------------------------------------
     def updateContract(self, event):
         """更新合约数据"""
         contract = event.dict_['data']
         self.contractDict[contract.vtSymbol] = contract
         self.contractDict[contract.symbol] = contract       # 使用常规代码（不包括交易所）可能导致重复
-        
+
     # ----------------------------------------------------------------------
     def getContract(self, vtSymbol):
         """查询合约对象"""
@@ -828,12 +832,12 @@ class DataEngine(object):
             return self.contractDict[vtSymbol]
         except KeyError:
             return None
-        
+
     # ----------------------------------------------------------------------
     def getAllContracts(self):
         """查询所有合约对象（返回列表）"""
         return list(self.contractDict.values())
-    
+
     # ----------------------------------------------------------------------
     def saveContracts(self):
         """保存所有合约对象到硬盘"""
@@ -841,7 +845,7 @@ class DataEngine(object):
         f = shelve.open(self.contractFilePath)
         f['data'] = self.contractDict
         f.close()
-    
+
     # ----------------------------------------------------------------------
     def loadContracts(self):
         """从硬盘读取合约对象"""
@@ -852,18 +856,18 @@ class DataEngine(object):
             for key, value in d.items():
                 self.contractDict[key] = value
         f.close()
-        
+
     # ----------------------------------------------------------------------
     def updateOrder(self, event):
         """更新委托数据"""
-        order = event.dict_['data']        
+        order = event.dict_['data']
         self.orderDict[order.vtOrderID] = order
-        
+
         # 如果订单的状态是全部成交或者撤销，则需要从workingOrderDict中移除
         if order.status in [STATUS_ALLTRADED, STATUS_REJECTED, STATUS_CANCELLED]:
             if order.vtOrderID in self.workingOrderDict:
                 del self.workingOrderDict[order.vtOrderID]
-        # 否则则更新字典中的数据        
+        # 否则则更新字典中的数据
         else:
             self.workingOrderDict[order.vtOrderID] = order
 
@@ -880,11 +884,12 @@ class DataEngine(object):
 
         try:
             if direction == DIRECTION_LONG:
+                if order.vtSymbol == vtSymbol and order.direction == DIRECTION_SHORT and order.gatewayName==gatewayName and order.price <= price:
+                    self.mainEngine.writeNotification(u'存在反向委托单:id:{},{},gw:{},order.price:{}<{}，有自成交风险'.
+                                                      format(order.vtOrderID,order.direction,order.gatewayName, order.price,price))
+                    return True
                 for order in list(self.workingOrderDict.values()):
-                    if order.vtSymbol == vtSymbol and order.direction == DIRECTION_SHORT and order.gatewayName==gatewayName and order.price <= price:
-                        self.mainEngine.writeNotification(u'存在反向委托单:id:{},{},gw:{},order.price:{}<{}，有自成交风险'.
-                                                          format(order.vtOrderID,order.direction,order.gatewayName, order.price,price))
-                        return True
+                    pass
             elif direction == DIRECTION_SHORT:
                 for order in list(self.workingOrderDict.values()):
                     if order.vtSymbol == vtSymbol and order.direction == DIRECTION_LONG and order.gatewayName == gatewayName and order.price >= price:
@@ -905,19 +910,19 @@ class DataEngine(object):
             return self.orderDict[vtOrderID]
         except KeyError:
             return None
-    
+
     # ----------------------------------------------------------------------
     def getAllWorkingOrders(self):
         """查询所有活动委托（返回列表）"""
         return list(self.workingOrderDict.values())
-    
+
     # ----------------------------------------------------------------------
     def registerEvent(self):
         """注册事件监听"""
         self.eventEngine.register(EVENT_CONTRACT, self.updateContract)
         self.eventEngine.register(EVENT_ORDER, self.updateOrder)
         self.eventEngine.register(EVENT_POSITION, self.updatePosition)
-        
+
     def clearData(self):
         """清空数据"""
 
